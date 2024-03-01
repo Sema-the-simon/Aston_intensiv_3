@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Aston_intensiv_3</string>
+    <string name="contact_id">id:%1$s</string>
 </resources>
