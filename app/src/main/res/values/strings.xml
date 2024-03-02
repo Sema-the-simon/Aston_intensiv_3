@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Aston_intensiv_3</string>
     <string name="contact_id">id:%1$s</string>
+    <string name="fab_content_desc">Add contact button</string>
+    <string name="default_text_id">id:0</string>
+    <string name="default_text_name">Name</string>
+    <string name="default_text_surname">Surname</string>
+    <string name="default_text_phone_number">+7 999 999 9999</string>
+    <string name="add_contact_hint_name">name</string>
+    <string name="add_contact_hint_surname">surname</string>
+    <string name="add_contact_hint_phone_number">phone number</string>
+    <string name="add_contact_btn_save">Save</string>
+    <string name="add_contact_btn_cancel">Cancel</string>
+    <string name="add_contact_dialog_title">Add new contact</string>
 </resources>

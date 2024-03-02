@@ -1,4 +1,4 @@
-package com.example.aston_intensiv_3.recycler
+package com.example.aston_intensiv_3.ui.recycler
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -35,7 +35,7 @@ class ContactsAdapter(
 
         fun bind(contact: Contact) {
             binding.contactItemId.text =
-                binding.root.context.getString(R.string.contact_id, contact.id)
+                binding.root.context.getString(R.string.contact_id, contact.id.toString())
             binding.tvContactItemName.text = contact.name
             binding.tvContactItemSurname.text = contact.surname
             binding.tvContactItemPhoneNumber.text = contact.phoneNumber

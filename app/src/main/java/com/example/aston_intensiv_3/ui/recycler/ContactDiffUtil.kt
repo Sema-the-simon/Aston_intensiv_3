@@ -1,4 +1,4 @@
-package com.example.aston_intensiv_3.recycler
+package com.example.aston_intensiv_3.ui.recycler
 
 import androidx.recyclerview.widget.DiffUtil
 import com.example.aston_intensiv_3.model.Contact
