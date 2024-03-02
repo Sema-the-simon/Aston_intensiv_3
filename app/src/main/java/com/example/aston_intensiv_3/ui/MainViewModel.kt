@@ -1,6 +1,8 @@
 package com.example.aston_intensiv_3.ui
 
+import android.view.View
 import androidx.lifecycle.ViewModel
+import com.example.aston_intensiv_3.R
 import com.example.aston_intensiv_3.getContacts
 import com.example.aston_intensiv_3.getRandomId
 import com.example.aston_intensiv_3.model.Contact
@@ -44,12 +46,53 @@ class MainViewModel : ViewModel() {
             )
         }
     }
+
+    fun toggleDeleteState() {
+        if (uiState.value.stateType != StateType.DELETE)
+            _uiState.update {
+                it.copy(
+                    stateType = StateType.DELETE,
+                    isDeleteStateButtonEnable = false,
+                    addButtonVisibility = View.GONE,
+                    deleteButtonsVisibility = View.VISIBLE,
+                    titleTextResId = R.string.title_delete
+                )
+            }
+        else
+            _uiState.update {
+                it.copy(
+                    stateType = StateType.IDLE,
+                    isDeleteStateButtonEnable = true,
+                    addButtonVisibility = View.VISIBLE,
+                    deleteButtonsVisibility = View.GONE,
+                    titleTextResId = R.string.main_title
+                )
+            }
+    }
+
+    fun deleteSelected() {
+        val newList = mutableListOf<Contact>()
+        uiState.value.contactList.forEach { contact ->
+            if (!contact.isSelected)
+                newList.add(contact)
+        }
+        toggleDeleteState()
+        _uiState.update {
+            it.copy(
+                contactList = newList
+            )
+        }
+    }
 }
 
 data class MainUiState(
     val contactList: List<Contact> = getContacts(),
     val editContactId: Int = -1,
-    val stateType: StateType = StateType.IDLE
+    val stateType: StateType = StateType.IDLE,
+    val isDeleteStateButtonEnable: Boolean = true,
+    val addButtonVisibility: Int = View.VISIBLE,
+    val deleteButtonsVisibility: Int = View.GONE,
+    val titleTextResId: Int = R.string.main_title
 )
 
-enum class StateType { IDLE, ADD, EDIT }
+enum class StateType { IDLE, ADD, EDIT, DELETE }

@@ -16,8 +16,8 @@ const val EDIT_CONTACT_FRAGMENT_TAG = "EDIT_CONTACT_FRAGMENT_TAG"
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val fragmentDialog = AddContactFragment()
     private val viewModel: MainViewModel by viewModels()
+
     private val adapter = ContactsAdapter() { model ->
         val bundle = Bundle().apply {
             putString(BUNDLE_KEY_NAME, model.name)
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.setFragmentResult(
             EDIT_CONTACT_RESULT_KEY, bundle
         )
-        AddContactFragment().show(supportFragmentManager, EDIT_CONTACT_FRAGMENT_TAG)
+        ChangeContactFragment().show(supportFragmentManager, EDIT_CONTACT_FRAGMENT_TAG)
         viewModel.changeStateTo(StateType.EDIT, model.id)
     }
 
@@ -53,8 +53,20 @@ class MainActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             fabAddContact.setOnClickListener {
-                fragmentDialog.show(supportFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
+                ChangeContactFragment().show(supportFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
                 viewModel.changeStateTo(StateType.ADD)
+            }
+
+            btnDeleteStart.setOnClickListener {
+                viewModel.toggleDeleteState()
+            }
+
+            btnDeleteSave.setOnClickListener {
+                viewModel.deleteSelected()
+            }
+
+            btnDeleteCancel.setOnClickListener {
+                viewModel.toggleDeleteState()
             }
         }
 
@@ -70,6 +82,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateUi(state: MainUiState) {
+        adapter.setStateType(state.stateType)
+        binding.apply {
+            btnDeleteStart.isEnabled = state.isDeleteStateButtonEnable
+            fabAddContact.visibility = state.addButtonVisibility
+            deleteGroup.visibility = state.deleteButtonsVisibility
 
+            tvTitle.text = getString(state.titleTextResId)
+        }
     }
 }
