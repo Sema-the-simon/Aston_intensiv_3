@@ -24,10 +24,8 @@ class MainActivity : AppCompatActivity() {
             putString(BUNDLE_KEY_SURNAME, model.surname)
             putString(BUNDLE_KEY_PHONE, model.phoneNumber)
         }
-        supportFragmentManager.setFragmentResult(
-            EDIT_CONTACT_RESULT_KEY, bundle
-        )
-        ChangeContactFragment().show(supportFragmentManager, EDIT_CONTACT_FRAGMENT_TAG)
+        ChangeContactFragment.withArgs(bundle)
+            .show(supportFragmentManager, EDIT_CONTACT_FRAGMENT_TAG)
         viewModel.changeStateTo(StateType.EDIT, model.id)
     }
 
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             fabAddContact.setOnClickListener {
-                ChangeContactFragment().show(supportFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
+                ChangeContactFragment.withArgs().show(supportFragmentManager, ADD_CONTACT_FRAGMENT_TAG)
                 viewModel.changeStateTo(StateType.ADD)
             }
 
